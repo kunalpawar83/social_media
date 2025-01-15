@@ -8,12 +8,12 @@ exports.Create = async (req, res) => {
     const { name, userName } = req.body;
 
     if (!name || !userName) {
-      return res.status(400).send({
+      res.status(400).json({
         message: "Name and userName can not be empty",
       });
     }
     if (!file) {
-      return res.status(400).json({
+      res.status(400).json({
         message: "Please upload a menuCategory file",
       });
     }
@@ -24,9 +24,9 @@ exports.Create = async (req, res) => {
       image: userimage.url,
     });
     await newUser.save();
-    res.send({ message: "User was registered successfully!" });
+    res.status(200).json({ message: "User was registered successfully!" });
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
       message: err.message || "Some error occurred while creating the User.",
     });
   }
@@ -38,7 +38,7 @@ exports.findAll = async (req, res) => {
     const users = await User.find();
     res.send(users);
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
       message: err.message || "Some error occurred while retrieving users.",
     });
   }
